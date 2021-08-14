@@ -1,1 +1,0 @@
-li.eliminar(buscar);

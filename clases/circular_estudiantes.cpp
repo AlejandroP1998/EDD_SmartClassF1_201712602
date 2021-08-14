@@ -24,7 +24,7 @@ class Lista
 
 public:
     void ingresar(string carne, string dpi,
-                  string nom, string carr, string mail, string passw, int cre, int age);
+                     string nom, string carr, string passw, int cre, int age, string mail);
     void buscar(string dato);
 
     void eliminar(string dato);
@@ -33,7 +33,7 @@ public:
 };
 
 void Lista::ingresar(string carne, string dpi,
-                     string nom, string carr, string mail, string passw, int cre, int age)
+                     string nom, string carr, string passw, int cre, int age, string mail)
 {
 
     nodo *nuevo_nodo = new nodo();

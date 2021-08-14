@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-#include "Doble_tareas.cpp"
+#include <sstream>
+#include <fstream>
 #include "cola_errores.cpp"
 #include "circular_estudiantes.cpp"
+#include "lista_tareas.cpp"
 
 
 /*
@@ -21,15 +23,20 @@ using namespace std;
 void I_manual();
 void reportes();
 void m_usuarios();
+void m_tareas();
+void carga_estudiantes(string documento);
+void carga_tareas(string documento);
 
-LinkedList ll;
 Queue q;
 Lista li;
+ListaD ld;
+
 
 int main()
 {
     system("cls");
     int opcion;
+    string documento;
     do
     {
 
@@ -51,9 +58,11 @@ int main()
         {
         case 1:
             // Lista de instrucciones de la opción 1
-            printf("Bienvenido a la carga de usuarios \n");
-            printf("Por favor ingrese la ruta del archivo de usuarios\n");
-
+            cout<<"Bienvenido a la carga de usuarios \n";
+            cout<<"Por favor ingrese la ruta del archivo de usuarios\n";
+            cin>>documento;
+            carga_estudiantes(documento);
+            li.mostrar();
             break;
 
         case 2:
@@ -72,17 +81,11 @@ int main()
             // Lista de instrucciones de la opción 4
             reportes();
             break;
-
-        case 5:
-            printf("Ha salido del programa\n");
-            system("exit");
-            break;
-        
         default:
             printf("Caracter invalido\n");
             break;
         }
-    } while (opcion !=5);
+    } while (opcion != 5);
     return 0;
 }
 
@@ -94,9 +97,9 @@ void I_manual()
     {
         cout << "\n\n******** Menu de carga manual ********" << endl;
         cout << "*                                    *" << endl;
-        cout << "*          1. Carga de usuarios      *" << endl;
-        cout << "*          2. Carga de tareas        *" << endl;
-        cout << "*          3. Salir                  *" << endl;
+        cout << "*          1. Usuarios               *" << endl;
+        cout << "*          2. Tareas                 *" << endl;
+        cout << "*          3. Regresar                  *" << endl;
         cout << "*                                    *" << endl;
         cout << "**************************************" << endl;
         cout << "\nIngrese una opcion: ";
@@ -105,20 +108,9 @@ void I_manual()
         {
         case 1:
             m_usuarios();
-
             break;
         case 2:
-            ll.addFront(5);
-            ll.addFront(25);
-            ll.addFront(3);
-            ll.addFront(80);
-            ll.addBack(21);
-            ll.addBack(34);
-            ll.removeBack();
-            ll.removeFront();
-
-            ll.printForward();
-
+            m_tareas();
             break;
         case 3:
             main();
@@ -126,8 +118,7 @@ void I_manual()
         default:
             break;
         }
-    }while(opcion != 3);
- 
+    } while (opcion != 3);
 }
 
 void m_usuarios()
@@ -147,13 +138,12 @@ void m_usuarios()
         int cre;
         int age;
 
-        
         cout << "\n\n******** Menu de usuarios ********" << endl;
         cout << "*                                    *" << endl;
         cout << "*          1. Ingresar               *" << endl;
         cout << "*          2. Modificar              *" << endl;
         cout << "*          3. Eliminar               *" << endl;
-        cout << "*          4. Salir                  *" << endl;
+        cout << "*          4. Regresar               *" << endl;
         cout << "*                                    *" << endl;
         cout << "**************************************" << endl;
         cout << "\nIngrese una opcion: ";
@@ -179,19 +169,15 @@ void m_usuarios()
             cout << "Ingrese la edad del estuante\n";
             cin >> age;
 
-            li.ingresar(carne, dpi, nom, carr, mail, passw, cre, age);
+            li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
             //li.mostrar();
 
             break;
         case 2:
-            /* li.ingresar("carne", "dpi1", "nom1", "carr", "mail", "1234", 120, 22);
-            li.ingresar("carne", "dpi2", "nom2", "carr", "mail", "1234", 120, 22);
-            li.ingresar("carne", "dpi3", "nom3", "carr", "mail", "1234", 120, 22);
-            li.mostrar(); */
+
             cout << "Ingrese el DPI del estudiante a modificar\n";
             cin >> buscar;
             li.buscar(buscar);
-            //li.mostrar();
 
             break;
         case 3:
@@ -204,20 +190,90 @@ void m_usuarios()
             li.eliminar(buscar);
             //li.mostrar();
             break;
-        case 4:
-            cout << "Ha salido de este menu" << endl;
-            I_manual();
-            break;
         default:
             cout << "Caracter invalido" << endl;
             break;
         }
-    }while(opcion != 4);
-
+    } while (opcion != 4);
 }
 
+void m_tareas()
+{
+    system("cls");
+    int buscar;
 
+    int opcion;
+    string mes;
+    string dia;
+    string hora;
+    string carne;
+    string nombre;
+    string descripcion;
+    string materia;
+    string fecha;
+    string estado;
+    do
+    {
 
+        cout << "\n\n******** Menu de tareas **********" << endl;
+        cout << "*                                    *" << endl;
+        cout << "*          1. Ingresar               *" << endl;
+        cout << "*          2. Modificar              *" << endl;
+        cout << "*          3. Eliminar               *" << endl;
+        cout << "*          4. Salir                  *" << endl;
+        cout << "*                                    *" << endl;
+        cout << "**************************************" << endl;
+        cout << "\nIngrese una opcion: ";
+        cin >> opcion;
+        switch (opcion)
+        {
+        case 1:
+            system("cls");
+            cout << "Ingrese el mes\n";
+            cin >> mes;
+            cout << "Ingrese el dia\n";
+            cin >> dia;
+            cout << "Ingrese la hora\n";
+            cin >> hora;
+            cout << "Ingrese el carne\n";
+            cin >> carne;
+            cout << "Ingrese el nombre\n";
+            cin >> nombre;
+            cout << "Ingrese la descripcion\n";
+            cin >> descripcion;
+            cout << "Ingrese la materia\n";
+            cin >> materia;
+            cout << "Ingrese la fecha\n";
+            cin >> fecha;
+            cout << "Ingrese el estado\n";
+            cin >> estado;
+            ld.insertarNodo(mes,dia,hora,carne,nombre,descripcion,materia,fecha,estado);
+            break;
+        case 2:
+            system("cls");
+            ld.insertarNodo("mes1","dia1","hora1","carne1", "nombre1", "descripcion1", "materia1", "fecha1",  "estado1");
+            ld.insertarNodo("mes2","dia2","hora2","carne2", "nombre2", "descripcion2", "materia2", "fecha2",  "estado2");
+            ld.insertarNodo("mes3","dia3","hora3","carne3", "nombre3", "descripcion3", "materia3", "fecha3",  "estado3");
+            ld.desplegarListaPU();
+            cout << "Ingrese el id de la tarea";
+            cin >> buscar;
+            ld.modificarNodo(buscar);
+            ld.desplegarListaPU();
+            break;
+        case 3:
+            system("cls");
+            ld.desplegarListaPU();
+            cout << "Ingrese el id de la tarea";
+            cin >> buscar;
+            ld.eliminarNodo(buscar);
+            ld.desplegarListaPU();
+            break;
+        default:
+            break;
+        }
+
+    } while (opcion != 4);
+}
 
 void reportes()
 {
@@ -229,5 +285,63 @@ void reportes()
     cout << "*         5. Salir                   *" << endl;
     cout << "*                                    *" << endl;
     cout << "**************************************" << endl;
-    
+}
+
+void carga_estudiantes(string documento)
+{
+    ifstream archivo(documento);
+    string linea;
+    char delimitador = ',';
+    // Leemos la primer línea para descartarla, pues es el encabezado
+    getline(archivo, linea);
+    // Leemos todas las líneas
+    while (getline(archivo, linea))
+    {
+
+        stringstream stream(linea); // Convertir la cadena a un stream
+        string carnet,dpi,nombre,carrera,password,creditos,edad,correo;
+        // Extraer todos los valores de esa fila
+        getline(stream, carnet, delimitador);
+        getline(stream, dpi, delimitador);
+        getline(stream, nombre, delimitador);
+        getline(stream, carrera, delimitador);
+        getline(stream, password, delimitador);
+        getline(stream, creditos, delimitador);
+        getline(stream, edad, delimitador);
+        getline(stream, correo, delimitador);
+        int credit,age;
+        credit =  atoi(creditos.c_str());
+        age =  atoi(edad.c_str());
+        li.ingresar(carnet,dpi,nombre,carrera,password,credit,age,correo);
+    }
+    archivo.close();
+}
+
+void carga_tareas(string documento)
+{
+    ifstream archivo(documento);
+    string linea;
+    char delimitador = ',';
+    // Leemos la primer línea para descartarla, pues es el encabezado
+    getline(archivo, linea);
+    // Leemos todas las líneas
+    while (getline(archivo, linea))
+    {
+
+        stringstream stream(linea); // Convertir la cadena a un stream
+        string mes,dia,hora,carnet,nombre,descripcion,materia,fecha,estado;
+        // Extraer todos los valores de esa fila
+        getline(stream, mes, delimitador);
+        getline(stream, dia, delimitador);
+        getline(stream, hora, delimitador);
+        getline(stream, carnet, delimitador);
+        getline(stream, nombre, delimitador);
+        getline(stream, descripcion, delimitador);
+        getline(stream, materia, delimitador);
+        getline(stream, fecha, delimitador);
+        getline(stream, estado, delimitador);
+
+        ld.insertarNodo(mes,dia,hora,carnet,nombre,descripcion,materia,fecha,estado);
+    }
+    archivo.close();
 }
