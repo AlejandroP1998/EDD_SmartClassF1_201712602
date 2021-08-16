@@ -1,0 +1,94 @@
+digraph G {
+rankdir=LR;
+node[shape = record];
+ nodo0[label=" carne:201700886
+ |dpi:3502451230508
+ |nombre:Emilia Miramontes
+ |carreraIngenieria en Ciencias y Sistemas
+ |correonicols36@hotmail.com
+ |password:roxodiciqi
+ |creditos:205
+ |edad:21"]
+ nodo0->nodo1
+nodo1[label=" carne:201501786
+ |dpi:7249529279753
+ |nombre:Juan Curiel
+ |carreraIngenieria Industrial
+ |correojernimo.caballero@yahoo.com
+ |password:zanolexima
+ |creditos:245
+ |edad:24"]
+ nodo1->nodo2
+nodo2[label=" carne:201822186
+ |dpi:9298434863898
+ |nombre:Eloisa Rincon
+ |carreraIngenieria Civil
+ |correocarolinaelizondo85@yahoo.com
+ |password:toqelijanu
+ |creditos:95
+ |edad:19"]
+ nodo2->nodo3
+nodo3[label=" carne:201901425
+ |dpi:4131766125532
+ |nombre:Bernardo Hinojosa
+ |carreraIngenieria Mecanica
+ |correoalfonso03@hotmail.com
+ |password:wosopumano
+ |creditos:100
+ |edad:20"]
+ nodo3->nodo4
+nodo4[label=" carne:201503186
+ |dpi:8549191766348
+ |nombre:Manuel Manzanares
+ |carreraIngenieria Electrica
+ |correobenitoarmas92@gmail.com
+ |password:rejumudore
+ |creditos:226
+ |edad:24"]
+ nodo4->nodo5
+nodo5[label=" carne:201123146
+ |dpi:9616636196552
+ |nombre:Julia Corona
+ |carreraIngenieria Electronica
+ |correongela.solorio86@yahoo.com
+ |password:xojobavuji
+ |creditos:237
+ |edad:26"]
+ nodo5->nodo6
+nodo6[label=" carne:201704186
+ |dpi:4778315315575
+ |nombre:Berta Carrasco
+ |carreraIngenieria Ambiental
+ |correocarmen.montenegro@yahoo.com
+ |password:gayahizatu
+ |creditos:210
+ |edad:22"]
+ nodo6->nodo7
+nodo7[label=" carne:202000786
+ |dpi:7382344774121
+ |nombre:Lola Delapaz
+ |carreraIngenieria Quimica
+ |correoadriana56@gmail.com
+ |password:hujocikimi
+ |creditos:45
+ |edad:19"]
+ nodo7->nodo8
+nodo8[label=" carne:201611446
+ |dpi:2511893949443
+ |nombre:Sonia Arteaga
+ |carreraIngenieria Mecanica Industrial
+ |correoesperanza.meza41@hotmail.com
+ |password:rezutafila
+ |creditos:195
+ |edad:23"]
+ nodo8->nodo9
+nodo9[label=" carne:201819852
+ |dpi:3423442386382
+ |nombre:Benjamin Asencio
+ |carreraIngenieria Mecanica Electrica
+ |correohoracio.tejada15@yahoo.com
+ |password:runoqozepo
+ |creditos:117
+ |edad:20"]
+ nodo9-> nodo0
+}

@@ -24,6 +24,7 @@ public:
     void eliminarNodo(int nodoBuscado);
     void desplegarListaPU();
     void desplegarListaUP();
+    void grafico();
 };
 
 void ListaD::insertarNodo(string mes, string dia, string hora,
@@ -57,7 +58,6 @@ void ListaD::insertarNodo(string mes, string dia, string hora,
         nuevo->atras = ultimo;
         ultimo = nuevo;
     }
-    cout << "\n Tarea Ingresada\n\n";
 }
 
 void ListaD::buscarNodo(int nodoBuscado)
@@ -252,6 +252,51 @@ void ListaD::desplegarListaUP()
 
             actual = actual->atras;
         }
+    }
+    else
+    {
+        cout << "\n La listas se encuentra Vacia\n\n";
+    }
+}
+
+void ListaD::grafico()
+{
+    nodo *actual = new nodo();
+    actual = primero;
+    if (primero != NULL)
+    {
+        int contador = 0;
+        ofstream archivo;
+        archivo.open("tareas.dot", ios::out); //Abriendo el archivo
+        archivo << "digraph G {\n";
+        archivo << "rankdir=LR;\n";
+        archivo << "node[shape = record];\n ";
+        archivo <<"edge[dir=\"both\"];\n";
+
+        while (actual != NULL)
+        {
+            string str1 = std::to_string(contador);
+            string str2 = std::to_string(contador + 1);
+            string ide = std::to_string(actual->id);
+
+            archivo << "nodo" + str1 << "[label=\" id:"+ide + "\n |carnet:" + 
+            actual->carnet + "\n |nombre:"+ actual->nombre + "\n |descripcion" + actual->descripcion + "\n |materia" + actual->materia  
+            + "\n |fecha:" + actual->fecha + "\n |hora:" + actual->hora + "\n |estado:" + actual->estado  +"\""+ "]";
+            if (actual->siguiente == NULL)
+            {
+                archivo << "\n nodo" + str1+"\n";
+            }
+            else
+            {
+                archivo << "\n nodo" + str1 + "->" + "nodo" + str2 + "\n";
+            }
+            contador++;
+
+            actual = actual->siguiente;
+        }
+        archivo << "}\n";
+        archivo.close();
+        system("dot -Tpng tareas.dot -o tareas.png");
     }
     else
     {

@@ -7,7 +7,6 @@
 #include "circular_estudiantes.cpp"
 #include "lista_tareas.cpp"
 
-
 /*
 á –> \xA0; 
 é –> \x82; 
@@ -26,11 +25,12 @@ void m_usuarios();
 void m_tareas();
 void carga_estudiantes(string documento);
 void carga_tareas(string documento);
+bool revisarCorreo(string palabra, string tipo, string id);
 
-Queue q;
+Queue q(150);
+
 Lista li;
 ListaD ld;
-
 
 int main()
 {
@@ -58,18 +58,20 @@ int main()
         {
         case 1:
             // Lista de instrucciones de la opción 1
-            cout<<"Bienvenido a la carga de usuarios \n";
-            cout<<"Por favor ingrese la ruta del archivo de usuarios\n";
-            cin>>documento;
+            cout << "Bienvenido a la carga de usuarios \n";
+            cout << "Por favor ingrese la ruta del archivo de usuarios\n";
+            cin >> documento;
             carga_estudiantes(documento);
-            li.mostrar();
+            //li.mostrar();
             break;
 
         case 2:
             // Lista de instrucciones de la opción 2
-            printf("Bienvenido a la carga de tareas \n");
-            printf("Por favor ingrese la ruta del archivo de tareas\n");
-
+            cout << "Bienvenido a la carga de tareas \n";
+            cout << "Por favor ingrese la ruta del archivo de tareas\n";
+            cin >> documento;
+            carga_tareas(documento);
+            ld.desplegarListaPU();
             break;
 
         case 3:
@@ -82,7 +84,6 @@ int main()
             reportes();
             break;
         default:
-            printf("Caracter invalido\n");
             break;
         }
     } while (opcion != 5);
@@ -99,7 +100,7 @@ void I_manual()
         cout << "*                                    *" << endl;
         cout << "*          1. Usuarios               *" << endl;
         cout << "*          2. Tareas                 *" << endl;
-        cout << "*          3. Regresar                  *" << endl;
+        cout << "*          3. Regresar               *" << endl;
         cout << "*                                    *" << endl;
         cout << "**************************************" << endl;
         cout << "\nIngrese una opcion: ";
@@ -128,9 +129,11 @@ void m_usuarios()
     do
     {
         string buscar;
-
+        bool answer;
         string carne;
+        int carne_bueno;
         string dpi;
+        int dpi_bueno;
         string nom;
         string carr;
         string mail;
@@ -168,8 +171,64 @@ void m_usuarios()
             cin >> cre;
             cout << "Ingrese la edad del estuante\n";
             cin >> age;
-
-            li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            answer = revisarCorreo(mail, "Estudiante", dpi);
+            carne_bueno = carne.size();
+            dpi_bueno = dpi.size();
+            if (carne_bueno != 9 && dpi_bueno != 13 && answer == 0)
+            {
+                cout << "Error: El carnet, dpi y correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet, correo y dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else if (carne_bueno != 9 && dpi_bueno != 13)
+            {
+                cout << "Error: El carnet y dpi del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet y dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else if (dpi_bueno != 13 && answer == 0)
+            {
+                cout << "Error: El dpi y correo del estudiante: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El dpi y correo del estudiante: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else if (carne_bueno != 9 && answer == 0)
+            {
+                cout << "Error: El carnet y correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet y correo del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else if (carne_bueno != 9)
+            {
+                cout << "Error: El carnet del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else if (dpi_bueno != 13)
+            {
+                cout << "Error: El dpi del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }else if(answer == 0)
+            {
+                cout << "Error: El correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El correo del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
+            else
+            {
+                cout<<"Estudiante"+nom+"\n";
+                cout<<"carne valido\n";
+                cout<<"dpi valido\n";
+                li.ingresar(carne, dpi, nom, carr, passw, cre, age, mail);
+            }
             //li.mostrar();
 
             break;
@@ -177,7 +236,7 @@ void m_usuarios()
 
             cout << "Ingrese el DPI del estudiante a modificar\n";
             cin >> buscar;
-            li.buscar(buscar);
+            li.modificar(buscar);
 
             break;
         case 3:
@@ -201,7 +260,7 @@ void m_tareas()
 {
     system("cls");
     int buscar;
-
+    bool answer;
     int opcion;
     string mes;
     string dia;
@@ -247,13 +306,28 @@ void m_tareas()
             cin >> fecha;
             cout << "Ingrese el estado\n";
             cin >> estado;
-            ld.insertarNodo(mes,dia,hora,carne,nombre,descripcion,materia,fecha,estado);
+
+            answer = li.buscarCarne(carne);
+            if (answer == 0)
+            {
+                cout << "Error: No se encontro en carne \n";
+                cout << "Error: revisar cola de errores\n";
+                q.enqueue("Tarea", "El carne del estudiante no se encontro en la lista");
+                cout << "La tarea respectiva al carne: " + carne + " no se encontro\n";
+                ld.insertarNodo(mes, dia, hora, carne, nombre, descripcion, materia, fecha, estado);
+            }
+            else if (answer == 1)
+            {
+                ld.insertarNodo(mes, dia, hora, carne, nombre, descripcion, materia, fecha, estado);
+            }
+
+            ld.desplegarListaPU();
             break;
         case 2:
             system("cls");
-            ld.insertarNodo("mes1","dia1","hora1","carne1", "nombre1", "descripcion1", "materia1", "fecha1",  "estado1");
-            ld.insertarNodo("mes2","dia2","hora2","carne2", "nombre2", "descripcion2", "materia2", "fecha2",  "estado2");
-            ld.insertarNodo("mes3","dia3","hora3","carne3", "nombre3", "descripcion3", "materia3", "fecha3",  "estado3");
+            ld.insertarNodo("mes1", "dia1", "hora1", "carne1", "nombre1", "descripcion1", "materia1", "fecha1", "estado1");
+            ld.insertarNodo("mes2", "dia2", "hora2", "carne2", "nombre2", "descripcion2", "materia2", "fecha2", "estado2");
+            ld.insertarNodo("mes3", "dia3", "hora3", "carne3", "nombre3", "descripcion3", "materia3", "fecha3", "estado3");
             ld.desplegarListaPU();
             cout << "Ingrese el id de la tarea";
             cin >> buscar;
@@ -277,18 +351,53 @@ void m_tareas()
 
 void reportes()
 {
+    int opcion;
     system("cls");
-    cout << "\n\n********** Menu de reportes *********" << endl;
-    cout << "*                                    *" << endl;
-    cout << "*         1. Lista de usuarios       *" << endl;
-    cout << "*         2. Linealizacion de tareas *" << endl;
-    cout << "*         5. Salir                   *" << endl;
-    cout << "*                                    *" << endl;
-    cout << "**************************************" << endl;
+    do
+    {
+        cout << "\n\n************* Menu de reportes ************" << endl;
+        cout << "*                                          *" << endl;
+        cout << "* 1. Lista de estudiantes                  *" << endl;
+        cout << "* 2. Lista de tareas linealizada           *" << endl;
+        cout << "* 3. Busqueda en estructura linealizada    *" << endl;
+        cout << "* 4. Busqueda de posicion linealizada      *" << endl;
+        cout << "* 5. Cola de errores                       *" << endl;
+        cout << "* 6. Codigo generado de salida             *" << endl;
+        cout << "* 7. Regresar                              *" << endl;
+        cout << "********************************************" << endl;
+        cout << "Escriba el numero de la opcion que desee: ";
+        cin >> opcion;
+        switch (opcion)
+        {
+        case 1:
+            li.grafico();
+            break;
+        case 2:
+            ld.grafico();
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            q.enqueue("Estudiante","DPI,CARNE");
+            q.enqueue("Estudiante","CORREO");
+            q.enqueue("Tarea","CARNE");
+            q.enqueue("Estudiante","DPI,CARNE");
+            q.enqueue("Tarea","FECHA");
+            q.grafico();
+            break;
+        case 6:
+            break;
+        default:
+            break;
+        }
+    } while (opcion != 7);
 }
 
 void carga_estudiantes(string documento)
 {
+    bool answer="";
     ifstream archivo(documento);
     string linea;
     char delimitador = ',';
@@ -299,7 +408,7 @@ void carga_estudiantes(string documento)
     {
 
         stringstream stream(linea); // Convertir la cadena a un stream
-        string carnet,dpi,nombre,carrera,password,creditos,edad,correo;
+        string carnet="", dpi="", nombre="", carrera="", password="", creditos="", edad="", correo="";
         // Extraer todos los valores de esa fila
         getline(stream, carnet, delimitador);
         getline(stream, dpi, delimitador);
@@ -309,10 +418,66 @@ void carga_estudiantes(string documento)
         getline(stream, creditos, delimitador);
         getline(stream, edad, delimitador);
         getline(stream, correo, delimitador);
-        int credit,age;
-        credit =  atoi(creditos.c_str());
-        age =  atoi(edad.c_str());
-        li.ingresar(carnet,dpi,nombre,carrera,password,credit,age,correo);
+        int credit, age;
+        credit = atoi(creditos.c_str());
+        age = atoi(edad.c_str());
+        answer = revisarCorreo(correo, "Estudiante", dpi);
+        if (carnet.size() != 9 && dpi.size() != 13 && answer == 0)
+            {
+                cout << "Error: El carnet, dpi y correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet, correo y dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else if (carnet.size() != 9 && dpi.size() != 13)
+            {
+                cout << "Error: El carnet y dpi del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet y dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else if (dpi.size() != 13 && answer == 0)
+            {
+                cout << "Error: El dpi y correo del estudiante: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El dpi y correo del estudiante: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else if (carnet.size() != 9 && answer == 0)
+            {
+                cout << "Error: El carnet y correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet y correo del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else if (carnet.size() != 9)
+            {
+                cout << "Error: El carnet del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El carnet del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else if (dpi.size() != 13)
+            {
+                cout << "Error: El dpi del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El dpi del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }else if(answer == 0)
+            {
+                cout << "Error: El correo del estudiante con dpi: " + dpi + " no es valido" << endl;
+                cout << "Error: revisar cola de errores" << endl;
+                q.enqueue("Estudiante", "El correo del estudiante con dpi: " + dpi + " no es valido");
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
+            else
+            {
+                cout<<"Estudiante:      "+nombre+"\n";
+                cout<<"carne valido:    "+carnet+"\n";
+                cout<<"dpi valido:      "+dpi+"\n";
+                cout<<"\n";
+                li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
+            }
     }
     archivo.close();
 }
@@ -329,7 +494,7 @@ void carga_tareas(string documento)
     {
 
         stringstream stream(linea); // Convertir la cadena a un stream
-        string mes,dia,hora,carnet,nombre,descripcion,materia,fecha,estado;
+        string mes, dia, hora, carnet, nombre, descripcion, materia, fecha, estado;
         // Extraer todos los valores de esa fila
         getline(stream, mes, delimitador);
         getline(stream, dia, delimitador);
@@ -341,7 +506,59 @@ void carga_tareas(string documento)
         getline(stream, fecha, delimitador);
         getline(stream, estado, delimitador);
 
-        ld.insertarNodo(mes,dia,hora,carnet,nombre,descripcion,materia,fecha,estado);
+        ld.insertarNodo(mes, dia, hora, carnet, nombre, descripcion, materia, fecha, estado);
     }
     archivo.close();
+}
+
+bool revisarCorreo(string palabra, string tipo, string id)
+{
+    bool well = false;
+    bool well1 = false;
+    bool well2 = false;
+
+    string word = "";
+    for (auto x : palabra)
+    {
+        if (x == '@')
+        {
+            well = true;
+            //cout << word + "\n";
+            //cout << word << endl;
+            word = "";
+        }
+        else if (x == '.')
+        {
+            well1 = true;
+            //cout << word + "\n";
+            //cout << word << endl;
+            word = "";
+        }
+        else
+        {
+            word = word + x;
+        }
+        if (word == "es" || word == "com" || word == "org")
+        {
+            //cout << word + "\n";
+            well2 = true;
+        }
+        else
+        {
+            well2 = false;
+        }
+    }
+    if (well == false || well1 == false || well2 == false)
+    {
+        cout << "Error: El correo no es valido \n";
+        cout << "Error: revisar cola de errores\n";
+        q.enqueue(tipo, "El correo del estudiante con dpi: " + id + " no es valido");
+        cout << "El correo del estudiante con dpi: " + id + " no es valido\n";
+        return 0;
+    }
+    else
+    {
+        cout << "Correo valido \n";
+        return 1;
+    }
 }

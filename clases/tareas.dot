@@ -1,0 +1,77 @@
+digraph G {
+rankdir=LR;
+node[shape = record];
+ edge[dir="both"];
+nodo0[label=" id:0
+ |carnet:201901425
+ |nombre:Tarea de Matematica
+ |descripcionRealizar la tarea del curso de matemática intermedia 1.
+ |materiaMatemática Intermedia 1
+ |fecha:2021/07/01
+ |hora:8
+ |estado:Incumplido"]
+ nodo0->nodo1
+nodo1[label=" id:1
+ |carnet:202000786
+ |nombre:Tarea de Fisica
+ |descripcionRealizar la tarea del curso de Física 1.
+ |materiaFísica 1
+ |fecha:2021/07/01
+ |hora:11
+ |estado:Pendiente"]
+ nodo1->nodo2
+nodo2[label=" id:2
+ |carnet:201704186
+ |nombre:Tarea de Estadística
+ |descripcionRealizar la tarea del curso de Estadística 1.
+ |materiaEstadística 1
+ |fecha:2021/07/14
+ |hora:10
+ |estado:Cumplido"]
+ nodo2->nodo3
+nodo3[label=" id:3
+ |carnet:201700886
+ |nombre:Codificar en C++
+ |descripcionRealizar la tarea del curso de Estructuras de datos
+ |materiaEstructuras de Datos
+ |fecha:2021/07/14
+ |hora:16
+ |estado:Pendiente"]
+ nodo3->nodo4
+nodo4[label=" id:4
+ |carnet:201901425
+ |nombre:Tarea de Lógica
+ |descripcionRealizar el resumen del curso de Lógica.
+ |materiaLógica
+ |fecha:2021/10/04
+ |hora:9
+ |estado:Pendiente"]
+ nodo4->nodo5
+nodo5[label=" id:5
+ |carnet:201704186
+ |nombre:Tarea 2 de Física 3
+ |descripcionRealizar la tarea del curso de Física 3.
+ |materiaFÍsica 3
+ |fecha:2021/10/04
+ |hora:11
+ |estado:Pendiente"]
+ nodo5->nodo6
+nodo6[label=" id:6
+ |carnet:201501786
+ |nombre:Encuesta de Estadística
+ |descripcionRealizar la encuesta del curso de Estadística 1.
+ |materiaEstadística 1
+ |fecha:2021/10/21
+ |hora:7
+ |estado:Pendiente"]
+ nodo6->nodo7
+nodo7[label=" id:7
+ |carnet:201700886
+ |nombre:Proyecto de Lenguajes
+ |descripcionRealizar el proyecto del curso de Lenguajes
+ |materiaLenguajes Formales y de Programación
+ |fecha:2021/10/21
+ |hora:13
+ |estado:Pendiente"]
+ nodo7
+}

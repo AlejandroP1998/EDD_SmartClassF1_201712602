@@ -1,0 +1,24 @@
+digraph G {
+rankdir=LR;
+node[shape = record];
+ nodo0[label=" id:0
+| Tipo:Estudiante
+|Descripcion:DPI,CARNE" ]
+ nodo0->nodo1
+nodo1[label=" id:1
+| Tipo:Estudiante
+|Descripcion:CORREO" ]
+ nodo1->nodo2
+nodo2[label=" id:2
+| Tipo:Tarea
+|Descripcion:CARNE" ]
+ nodo2->nodo3
+nodo3[label=" id:3
+| Tipo:Estudiante
+|Descripcion:DPI,CARNE" ]
+ nodo3->nodo4
+nodo4[label=" id:4
+| Tipo:Tarea
+|Descripcion:FECHA" ]
+ nodo4->nodo5
+}
