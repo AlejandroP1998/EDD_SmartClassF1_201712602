@@ -28,13 +28,26 @@ void carga_tareas(string documento);
 bool revisarCorreo(string palabra, string tipo, string id);
 void errores();
 
+void archivoSalida();
+
 Queue q(150);
 
 Lista li;
 ListaD ld;
 
+int salir = 0;
+
 int main()
 {
+    if (salir == 0)
+    {
+        ofstream documento;
+        documento.open("salida.txt", ios::out);
+        documento << "¿Elements?\n";
+        documento.close();
+        salir = 1;
+    }
+
     system("cls");
     int opcion;
     string documento;
@@ -89,18 +102,15 @@ int main()
             errores();
             break;
         case 6:
-            if (q.size() == 0)
-            {
-                cout << "La cola de errores esta vacia\nha salido del programa";
-            }
-            else
+            if (q.size() != 0)
             {
                 cout << "La cola de errores no esta vacia\n";
             }
+            else{}
         default:
             break;
         }
-    } while (opcion != 6 && q.size() != 0);
+    } while (q.size() != 0);
     return 0;
 }
 
@@ -420,23 +430,22 @@ void reportes()
             ld.grafico();
             break;
         case 3:
+            ld.busquedaFecha();
             break;
         case 4:
+            ld.buscarPosicion();
             break;
         case 5:
-            q.enqueue("Estudiante", "DPI,CARNE");
-            q.enqueue("Estudiante", "CORREO");
-            q.enqueue("Tarea", "CARNE");
-            q.enqueue("Estudiante", "DPI,CARNE");
-            q.enqueue("Tarea", "FECHA");
             q.grafico();
             break;
         case 6:
+            archivoSalida();
             break;
         default:
             break;
         }
     } while (opcion != 7);
+    main();
 }
 
 void carga_estudiantes(string documento)
@@ -525,6 +534,7 @@ void carga_estudiantes(string documento)
         }
     }
     archivo.close();
+    main();
 }
 
 void carga_tareas(string documento)
@@ -586,6 +596,7 @@ void carga_tareas(string documento)
         ld.insertarNodo(mes, dia, hora, carnet, nombre, descripcion, materia, fecha, estado);
     }
     archivo.close();
+    main();
 }
 
 bool revisarCorreo(string palabra, string tipo, string id)
@@ -654,32 +665,44 @@ void errores()
         cout << "5. Errores restantes\n";
         cout << "6. Regresar\n";
         cout << "\n";
-        cin>>opcion;
-        switch(opcion)
+        cin >> opcion;
+        switch (opcion)
         {
-            case 1:
-                q.imprimir();
-                break;
-            case 2:
-                q.dequeue();
-                break;
-            case 3:
-                cout<<"Ingrese el dpi del estudiante\n";
-                cin>>dpi;
-                li.modificar(dpi);
-                break;
-            case 4:
-                cout<<"Ingrese el id de la tarea\n";
-                cin>>id;
-                ld.modificarNodo(id);
-                break;
-            case 5:
-                cout<<"Faltan:\n";
-                cout<<q.size() + "errores\n";
-                break;
-            default:
-                break;
+        case 1:
+            q.imprimir();
+            break;
+        case 2:
+            q.dequeue();
+            break;
+        case 3:
+            cout << "Ingrese el dpi del estudiante\n";
+            cin >> dpi;
+            li.modificar(dpi);
+            break;
+        case 4:
+            cout << "Ingrese el id de la tarea\n";
+            cin >> id;
+            ld.modificarNodo(id);
+            break;
+        case 5:
+            cout << "Faltan:\n";
+            cout << q.size() + "errores\n";
+            break;
+        default:
+            break;
         }
-    }while(opcion != 6);
+    } while (opcion != 6);
     main();
+}
+
+void archivoSalida()
+{
+    li.salida();
+    ld.salida();
+
+    ofstream documento;
+    //para añadir texto se usa app
+    documento.open("salida.txt", ios::app);
+    documento << "\n¿$Elements?";
+    documento.close();
 }

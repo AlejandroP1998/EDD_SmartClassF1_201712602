@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <iomanip>
 using namespace std;
-
+int contar = 0;
 class Lista
 {
 
@@ -37,6 +37,8 @@ public:
     void mostrar();
 
     void grafico();
+
+    void salida();
 };
 
 void Lista::ingresar(string carne, string dpi,
@@ -307,10 +309,46 @@ void Lista::grafico()
         } while (aux != primero);
         archivo << "}\n";
         archivo.close();
-        system("dot -Tpng estudiantes.dot -o estudiantes.png");
+        string cmd = "dot -Tpng estudiantes.dot -o estudiantes";
+        string str = std::to_string(contar);
+        cmd += str;
+        cmd += ".png";
+        system(cmd.c_str());
+        contar++;
     }
     else
     {
         cout << "La lista esta vacia !!!\n";
     }
+}
+
+void Lista::salida()
+{
+    ofstream documento;
+    //para añadir texto se usa app
+    documento.open("salida.txt", ios::app);
+
+    nodo *aux = new nodo();
+    aux = primero;
+    if (primero != NULL)
+    {
+        do
+        {
+            string creditos = std::to_string(aux->creditos);
+            string edad = std::to_string(aux->edad);
+            documento<<"    ¿element type=\"user\"?\n";
+            documento<<"        ¿item Carnet = \""+aux->carne+"\" $?\n";
+            documento<<"        ¿item DPI = \""+aux->dpi+"\" $?\n";
+            documento<<"        ¿item Nombre = \""+aux->nombre+"\" $?\n";
+            documento<<"        ¿item Carrera = \""+aux->carrera+"\" $?\n";
+            documento<<"        ¿item Correo = \""+aux->correo+"\" $?\n";
+            documento<<"        ¿item Password = \""+aux->password+"\" $?\n";
+            documento<<"        ¿item Creditos = \""+creditos+"\" $?\n";
+            documento<<"        ¿item Edad = \""+edad+"\" $?\n";
+            documento<<"    ¿$element?\n";
+            aux = aux->siguiente;
+        } while (aux != primero);
+    }
+    else{}
+    documento.close();
 }

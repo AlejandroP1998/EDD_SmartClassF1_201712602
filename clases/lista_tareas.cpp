@@ -1,8 +1,11 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
 int numero = 0;
+int numero2 = 0;
 
 class ListaD
 {
@@ -11,6 +14,7 @@ public:
     {
 
         int id = 0;
+        int posicion;
         string mes, dia, hora, carnet, nombre, descripcion, materia, fecha, estado;
         nodo *siguiente;
         nodo *atras;
@@ -25,6 +29,9 @@ public:
     void desplegarListaPU();
     void desplegarListaUP();
     void grafico();
+    void busquedaFecha();
+    void buscarPosicion();
+    void salida();
 };
 
 void ListaD::insertarNodo(string mes, string dia, string hora,
@@ -43,6 +50,68 @@ void ListaD::insertarNodo(string mes, string dia, string hora,
     nuevo->materia = materia;
     nuevo->fecha = fecha;
     nuevo->estado = estado;
+    //Considerando un arreglo [9][30][5]
+    //Array[hora][dia][mes]
+    int month = atoi(mes.c_str());
+    int day = atoi(dia.c_str());
+    int hour = atoi(hora.c_str());
+    switch (hour)
+    {
+    case 8:
+        hour = 0;
+        break;
+    case 9:
+        hour = 1;
+        break;
+    case 10:
+        hour = 2;
+        break;
+    case 11:
+        hour = 3;
+        break;
+    case 12:
+        hour = 4;
+        break;
+    case 13:
+        hour = 5;
+        break;
+    case 14:
+        hour = 6;
+        break;
+    case 15:
+        hour = 7;
+        break;
+    case 16:
+        hour = 8;
+        break;
+    default:
+        break;
+    }
+
+    switch (month)
+    {
+    case 7:
+        month = 0;
+        break;
+    case 8:
+        month = 1;
+        break;
+    case 9:
+        month = 2;
+        break;
+    case 10:
+        month = 3;
+        break;
+    case 11:
+        month = 4;
+        break;
+    default:
+        break;
+    }
+
+    //ROW MAJOR
+    //month+5(day+30(hour*9))
+    nuevo->posicion = month+5*(day+30*(hour*9));
 
     if (primero == NULL)
     {
@@ -90,7 +159,7 @@ void ListaD::buscarNodo(int nodoBuscado)
     }
     else
     {
-        cout << "\n La listas se encuentra Vacia\n\n";
+        cout << "\n La lista se encuentra Vacia\n\n";
     }
 }
 
@@ -162,7 +231,6 @@ void ListaD::modificarNodo(int nodoBuscado)
                     break;
                 }
 
-                
                 encontrado = true;
             }
 
@@ -179,10 +247,6 @@ void ListaD::modificarNodo(int nodoBuscado)
         cout << "\n La listas se encuentra Vacia\n\n";
     }
 }
-
-// primero = 23      ultimo  = 78    actual  = 12    anterior =  78      encontrado = false      nodoBuscado = 12;
-
-// lista doble         NULL <- 45 -> <- 23 -> <- 78 -> <- 12 -> NULL
 
 void ListaD::eliminarNodo(int nodoBuscado)
 {
@@ -330,10 +394,199 @@ void ListaD::grafico()
         }
         archivo << "}\n";
         archivo.close();
-        system("dot -Tpng tareas.dot -o tareas.png");
+        string cmd = "dot -Tpng tareas.dot -o tarea";
+        string str = std::to_string(numero2);
+        cmd += str;
+        cmd += ".png";
+        system(cmd.c_str());
+        numero2++;
     }
     else
     {
         cout << "\n La listas se encuentra Vacia\n\n";
     }
+}
+
+void ListaD::busquedaFecha()
+{
+    nodo *actual = new nodo();
+    actual = primero;
+    bool encontrado = false;
+    string m, d, h;
+    cout << " Ingrese el mes de la tarea a buscar: ";
+    cin >> m;
+    cout << " Ingrese el dia de la tarea a buscar: ";
+    cin >> d;
+    cout << " Ingrese el hora de la tarea a buscar: ";
+    cin >> h;
+
+    if (primero != NULL)
+    {
+
+        while (actual != NULL && encontrado != true)
+        {
+
+            if (actual->mes == m && actual->dia == d && actual->hora == h)
+            {
+                cout << "carne:" << actual->carnet + "\n";
+                cout << "nombre:" << actual->nombre + "\n";
+                cout << "descripcion:" << actual->descripcion + "\n";
+                cout << "materia:" << actual->materia + "\n";
+                cout << "fecha:" << actual->fecha + "\n";
+                cout << "estado:" << actual->estado + "\n";
+                encontrado = true;
+            }
+
+            actual = actual->siguiente;
+        }
+
+        if (!encontrado)
+        {
+            cout << "\n Tarea no Encontrada\n\n";
+        }
+    }
+    else
+    {
+        cout << "\n La lista se encuentra Vacia\n\n";
+    }
+}
+
+void ListaD::buscarPosicion()
+{
+    int mes,dia,hora;
+    int posicion;
+    cout<<"Ingrese el mes de la tarea\n";
+    cin>>mes;
+    cout<<"Ingrese el dia de la tarea\n";
+    cin>>dia;
+    cout<<"Ingrese la hora de la tarea\n";
+    cin>>hora;
+    //Considerando un arreglo [9][30][5]
+    //Array[hora][dia][mes]
+    switch (hora)
+    {
+    case 8:
+        hora = 0;
+        break;
+    case 9:
+        hora = 1;
+        break;
+    case 10:
+        hora = 2;
+        break;
+    case 11:
+        hora = 3;
+        break;
+    case 12:
+        hora = 4;
+        break;
+    case 13:
+        hora = 5;
+        break;
+    case 14:
+        hora = 6;
+        break;
+    case 15:
+        hora = 7;
+        break;
+    case 16:
+        hora = 8;
+        break;
+    default:
+        break;
+    }
+
+    switch (mes)
+    {
+    case 7:
+        mes = 0;
+        break;
+    case 8:
+        mes = 1;
+        break;
+    case 9:
+        mes = 2;
+        break;
+    case 10:
+        mes = 3;
+        break;
+    case 11:
+        mes = 4;
+        break;
+    default:
+        break;
+    }
+
+    //ROW MAJOR
+    //month+5(day+30(hour*9))
+    posicion = mes+5*(dia+30*(hora*9));
+
+    nodo *actual = new nodo();
+    actual = primero;
+    bool encontrado = false;
+
+    if (primero != NULL)
+    {
+
+        while (actual != NULL && encontrado != true)
+        {
+
+            if (actual->posicion == posicion)
+            {
+                cout << "\n Tarea con id ( " << actual->id << " ) Encontrada\n\n";
+                cout<<actual->carnet+"\n";
+                cout<<actual->nombre+"\n";
+                cout<<actual->descripcion+"\n";
+                cout<<actual->materia+"\n";
+                cout<<actual->fecha+"\n";
+                cout<<actual->hora+"\n";
+                cout<<actual->estado+"\n";
+                cout<<"Utilizando ROW MAJOR su posicion es: "+posicion<<"\n";
+                encontrado = true;
+            }
+
+            actual = actual->siguiente;
+        }
+
+        if (!encontrado)
+        {
+            cout << "\n La tarea no existe\n\n";
+        }
+    }
+    else
+    {
+        cout << "\n La lista se encuentra Vacia\n\n";
+    }
+
+}
+
+void ListaD::salida()
+{
+
+    ofstream documento;
+    //para añadir texto se usa app
+    documento.open("salida.txt", ios::app);
+
+    nodo *actual = new nodo();
+    actual = primero;
+    if (primero != NULL)
+    {
+
+        while (actual != NULL)
+        {
+            string id = std::to_string(actual->id);
+            documento<<"    ¿element type=\"task\"?\n";
+            documento<<"        ¿item Id = \""+id+"\" $?\n";
+            documento<<"        ¿item Carnet = \""+actual->carnet+"\" $?\n";
+            documento<<"        ¿item Nombre = \""+actual->nombre+"\" $?\n";
+            documento<<"        ¿item Descripcion = \""+actual->descripcion+"\" $?\n";
+            documento<<"        ¿item Materia = \""+actual->materia+"\" $?\n";
+            documento<<"        ¿item Fecha = \""+actual->fecha+"\" $?\n";
+            documento<<"        ¿item Hora = \""+actual->hora+"\" $?\n";
+            documento<<"        ¿item Estado = \""+actual->estado+"\" $?\n";
+            documento<<"    ¿$element?\n";
+            actual = actual->siguiente;
+        }
+    }else{}
+    documento.close();
 }

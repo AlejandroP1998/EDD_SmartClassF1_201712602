@@ -4,6 +4,7 @@
 using namespace std;
 
 int num = 0;
+int contarN=0;
 class Node
 {
 public:
@@ -138,13 +139,11 @@ void Queue::grafico()
         string str2 = std::to_string(contador + 1);
         string ide = std::to_string(header->next->id);
 
-        archivo << "nodo" + str1 << "[label=\" id:" + ide +
-         "\n| Tipo:" + header->next->tipo + "\n|Descripcion:" + header->next->campo + "\" ]";
+        archivo << "nodo" + str1 << "[label=\" id:" + ide + "\n| Tipo:" + header->next->tipo + "\n|Descripcion:" + header->next->campo + "\" ]";
 
         if (header->next != NULL)
         {
             archivo << "\n nodo" + str1 + "->" + "nodo" + str2 + "\n";
-            
         }
         else
         {
@@ -156,7 +155,12 @@ void Queue::grafico()
     }
     archivo << "}\n";
     archivo.close();
-    system("dot -Tpng errores.dot -o errores.png");
+    string cmd = "dot -Tpng errores.dot -o errores";
+    string str = std::to_string(contarN);
+    cmd += str;
+    cmd += ".png";
+    system(cmd.c_str());
+    contarN++;
     while (i != 0)
     {
         header = header->prev;
