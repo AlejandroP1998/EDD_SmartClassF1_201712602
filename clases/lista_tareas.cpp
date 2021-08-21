@@ -96,6 +96,7 @@ void ListaD::buscarNodo(int nodoBuscado)
 
 void ListaD::modificarNodo(int nodoBuscado)
 {
+    int opcion;
     nodo *actual = new nodo();
     actual = primero;
     bool encontrado = false;
@@ -108,25 +109,60 @@ void ListaD::modificarNodo(int nodoBuscado)
             if (actual->id == nodoBuscado)
             {
                 cout << "\n Tarea con el id ( " << nodoBuscado << " ) Encontrada";
-                cout << "\n Ingrese el nuevo mes para esta Tarea: ";
-                cin >> actual->mes;
-                cout << "\n Ingrese el nuevo dia para esta Tarea: ";
-                cin >> actual->dia;
-                cout << "\n Ingrese la nueva hora para esta Tarea: ";
-                cin >> actual->hora;
-                cout << "\n Ingrese el nuevo carne para esta Tarea: ";
-                cin >> actual->carnet;
-                cout << "\n Ingrese el nuevo nombre para esta Tarea: ";
-                cin >> actual->nombre;
-                cout << "\n Ingrese la nueva descripcion para esta Tarea: ";
-                cin >> actual->descripcion;
-                cout << "\n Ingrese la nuevo materia para esta Tarea: ";
-                cin >> actual->materia;
-                cout << "\n Ingrese la nuevo fecha para esta Tarea: ";
-                cin >> actual->fecha;
-                cout << "\n Ingrese el nuevo estado para esta Tarea: ";
-                cin >> actual->estado;
-                cout << " Nodo Modificado\n\n";
+                cout << "1. Mes\n";
+                cout << "2. Dia\n";
+                cout << "3. Hora\n";
+                cout << "4. Carne\n";
+                cout << "5. Nombre\n";
+                cout << "6. Descripcion\n";
+                cout << "7. Materia\n";
+                cout << "8. Fecha\n";
+                cout << "9. Estado\n";
+                cout << "Ingrese el numero de lo que desea modificar:\n";
+                cin >> opcion;
+                switch (opcion)
+                {
+                case 1:
+                    cout << "\n Ingrese el nuevo mes para esta Tarea: ";
+                    cin >> actual->mes;
+                    break;
+                case 2:
+                    cout << "\n Ingrese el nuevo dia para esta Tarea: ";
+                    cin >> actual->dia;
+                    break;
+                case 3:
+                    cout << "\n Ingrese la nueva hora para esta Tarea: ";
+                    cin >> actual->hora;
+                    break;
+                case 4:
+                    cout << "\n Ingrese el nuevo carne para esta Tarea: ";
+                    cin >> actual->carnet;
+                    break;
+                case 5:
+                    cout << "\n Ingrese el nuevo nombre para esta Tarea: ";
+                    cin >> actual->nombre;
+                    break;
+                case 6:
+                    cout << "\n Ingrese la nueva descripcion para esta Tarea: ";
+                    cin >> actual->descripcion;
+                    break;
+                case 7:
+                    cout << "\n Ingrese la nuevo materia para esta Tarea: ";
+                    cin >> actual->materia;
+                    break;
+                case 8:
+                    cout << "\n Ingrese la nuevo fecha para esta Tarea: ";
+                    cin >> actual->fecha;
+                    break;
+                case 9:
+                    cout << "\n Ingrese el nuevo estado para esta Tarea: ";
+                    cin >> actual->estado;
+                    break;
+                default:
+                    break;
+                }
+
+                
                 encontrado = true;
             }
 
@@ -271,7 +307,7 @@ void ListaD::grafico()
         archivo << "digraph G {\n";
         archivo << "rankdir=LR;\n";
         archivo << "node[shape = record];\n ";
-        archivo <<"edge[dir=\"both\"];\n";
+        archivo << "edge[dir=\"both\"];\n";
 
         while (actual != NULL)
         {
@@ -279,12 +315,10 @@ void ListaD::grafico()
             string str2 = std::to_string(contador + 1);
             string ide = std::to_string(actual->id);
 
-            archivo << "nodo" + str1 << "[label=\" id:"+ide + "\n |carnet:" + 
-            actual->carnet + "\n |nombre:"+ actual->nombre + "\n |descripcion" + actual->descripcion + "\n |materia" + actual->materia  
-            + "\n |fecha:" + actual->fecha + "\n |hora:" + actual->hora + "\n |estado:" + actual->estado  +"\""+ "]";
+            archivo << "nodo" + str1 << "[label=\" id:" + ide + "\n |carnet:" + actual->carnet + "\n |nombre:" + actual->nombre + "\n |descripcion" + actual->descripcion + "\n |materia" + actual->materia + "\n |fecha:" + actual->fecha + "\n |hora:" + actual->hora + "\n |estado:" + actual->estado + "\"" + "]";
             if (actual->siguiente == NULL)
             {
-                archivo << "\n nodo" + str1+"\n";
+                archivo << "\n nodo" + str1 + "\n";
             }
             else
             {

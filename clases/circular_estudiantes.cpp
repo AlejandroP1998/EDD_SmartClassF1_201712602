@@ -108,65 +108,58 @@ void Lista::modificar(string dato)
             {
                 cout << "Estudiante encontrado\n"
                      << endl;
-                cout << "Escriba el nuevo carne:\n";
-                cin >> carne_bueno;
-
-                cout << "Escriba el nuevo dpi:\n";
-                cin >> dpi_bueno;
-
-                if (carne_bueno.size() != 9)
+                int opcion;
+                cout << "1. Carne \n";
+                cout << "2. DPI \n";
+                cout << "3. Nombre\n";
+                cout << "4. Carrera\n";
+                cout << "5. Correo\n";
+                cout << "6. Password\n";
+                cout << "7. Creditos\n";
+                cout << "8. Edad\n";
+                cout << "Ingrese el numero de lo que desea modificar\n";
+                cin >> opcion;
+                switch (opcion)
                 {
-                    cout << "Los digitos del carne deben ser 9\n";
-                    cout << "desea intentar otra vez (Y/N)\n";
-                    cin >> respuesta;
-                    if (respuesta == "Y" || respuesta == "y")
-                    {
-                    }
-                    else if (respuesta == "N" || respuesta == "n")
-                    {
-                        encontrado = true;
-                    }
-                    else
-                    {
-                        encontrado = true;
-                    }
-                }
-                else if (dpi_bueno.size() != 13)
-                {
-                    cout << "Los digitos del dpi deben ser 13\n";
-                    cout << "desea intentar otra vez (Y/N)\n";
-                    cin >> respuesta;
-                    if (respuesta == "Y" || respuesta == "y")
-                    {
-                    }
-                    else if (respuesta == "N" || respuesta == "n")
-                    {
-                        encontrado = true;
-                    }
-                    else
-                    {
-                        encontrado = true;
-                    }
-                }
-                else
-                {
+                case 1:
+                    cout << "Escriba el nuevo carne:\n";
+                    cin >> carne_bueno;
                     buscar->carne = carne_bueno;
+                    break;
+                case 2:
+                    cout << "Escriba el nuevo dpi:\n";
+                    cin >> dpi_bueno;
                     buscar->dpi = dpi_bueno;
+                    break;
+                case 3:
                     cout << "Escriba el nuevo nombre:\n";
                     cin >> buscar->nombre;
+                    break;
+                case 4:
                     cout << "Escriba la nueva carrera:\n";
                     cin >> buscar->carrera;
+                    break;
+                case 5:
                     cout << "Escriba el nuevo correo:\n";
                     cin >> buscar->correo;
+                    break;
+                case 6:
                     cout << "Escriba el nuevo password:\n";
                     cin >> buscar->password;
+                    break;
+                case 7:
                     cout << "Escriba los nuevos creditos:\n";
                     cin >> buscar->creditos;
+                    break;
+                case 8:
                     cout << "Escriba la nueva edad:\n";
                     cin >> buscar->edad;
-
-                    encontrado = true;
+                    break;
+                default:
+                    break;
                 }
+
+                encontrado = true;
             }
             buscar = buscar->siguiente;
         } while (buscar != primero && encontrado == false);
@@ -300,9 +293,7 @@ void Lista::grafico()
             string cre = std::to_string(aux->creditos);
             string ed = std::to_string(aux->edad);
 
-            archivo << "nodo" + str1 << "[label=\" carne:"+aux->carne + "\n |dpi:" + 
-            aux->dpi + "\n |nombre:"+ aux->nombre + "\n |carrera" + aux->carrera + "\n |correo" + aux->correo  
-            + "\n |password:" + aux->password + "\n |creditos:" + cre + "\n |edad:" + ed  +'\"'+ "]";
+            archivo << "nodo" + str1 << "[label=\" carne:" + aux->carne + "\n |dpi:" + aux->dpi + "\n |nombre:" + aux->nombre + "\n |carrera" + aux->carrera + "\n |correo" + aux->correo + "\n |password:" + aux->password + "\n |creditos:" + cre + "\n |edad:" + ed + '\"' + "]";
             if (aux->siguiente == primero)
             {
                 archivo << "\n nodo" + str1 + "-> nodo0\n";
