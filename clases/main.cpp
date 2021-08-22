@@ -48,7 +48,7 @@ int main()
         salir = 1;
     }
 
-    system("cls");
+    //system("cls");
     int opcion;
     string documento;
     do
@@ -86,7 +86,8 @@ int main()
             cout << "Por favor ingrese la ruta del archivo de tareas\n";
             cin >> documento;
             carga_tareas(documento);
-            ld.desplegarListaPU();
+            system("pause>nul");
+            //ld.desplegarListaPU();
             break;
 
         case 3:
@@ -450,7 +451,7 @@ void reportes()
 
 void carga_estudiantes(string documento)
 {
-    bool answer = "";
+    bool answer = 0;
     ifstream archivo(documento);
     string linea;
     char delimitador = ',';
@@ -526,10 +527,6 @@ void carga_estudiantes(string documento)
         }
         else
         {
-            cout << "Estudiante:      " + nombre + "\n";
-            cout << "carne valido:    " + carnet + "\n";
-            cout << "dpi valido:      " + dpi + "\n";
-            cout << "\n";
             li.ingresar(carnet, dpi, nombre, carrera, password, credit, age, correo);
         }
     }
@@ -646,7 +643,7 @@ bool revisarCorreo(string palabra, string tipo, string id)
     }
     else
     {
-        cout << "Correo valido \n";
+        
         return 1;
     }
 }
