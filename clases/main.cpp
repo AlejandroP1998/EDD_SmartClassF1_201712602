@@ -48,7 +48,7 @@ int main()
         salir = 1;
     }
 
-    //system("cls");
+    system("cls");
     int opcion;
     string documento;
     do
